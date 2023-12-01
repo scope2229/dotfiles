@@ -1,0 +1,16 @@
+{
+  "<%= %>": {
+    "prefix": "=",
+    "body": [
+      "<%= $0 %>"
+    ],
+    "description": "Execute ruby and display the output"
+  },
+  "<% $0 %>": {
+    "prefix": "-",
+    "body": [
+      "<% $0 %>"
+    ],
+    "description": "Execute ruby with nothing used as an output"
+  }
+}

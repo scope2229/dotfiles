@@ -1,0 +1,59 @@
+## ALIAS COMMANDS
+
+# GIT
+alias g="git"
+alias gp='g pull'
+# Push the currently checked out branch
+alias gpo='g push origin "$(g symbolic-ref --short HEAD)"'
+alias gc='g checkout'
+
+# SYSTEM
+alias update='sudo apt update'
+alias upgrade='sudo apt upgrade'
+
+# RAILS
+alias r="rails"
+alias rdbm="r db:migrate"
+alias rr="r routes"
+alias appreset="rails db:drop && rails db:schema:load && rails db:migrate && rails db:seed && ./bin/dev"
+
+## ALIAS FUNCTIONS
+
+# SYSTEM
+
+# Sometimes Javascript watcher or puma will break.
+# This often causes rails server to fail due to
+# address still in use.
+# Use this command along with the port number to
+# kill the process
+kp() {
+  kill $(lsof -t -i:$1)
+}
+
+# RAILS
+rdbr() {
+  r db:rollback STEP=$1
+}
+
+# GIT
+gcn() {
+	gc -b $1
+}
+
+gco() {
+	gc $1
+}
+
+_gitbranch_complete() {
+    branches=$(git branch -l | cut -c3-)
+    COMPREPLY=($(compgen -W "$branches" -- "$2"))
+}
+
+# register handler to provide completion hints for the "gcob" command
+# source ~/.completions/git
+
+complete -F _gitbranch_complete gco
+
+complete -o bashdefault -o default -o nospace -F __git_wrap__gitk_main g
+
+complete -o bashdefault -o default -o nospace -F __git_complete gc

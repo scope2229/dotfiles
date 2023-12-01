@@ -1,0 +1,59 @@
+{
+  "editor.tabCompletion": "on",
+  "editor.tabSize": 2,
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "editor.unicodeHighlight.allowedCharacters": {
+    "️": true
+  },
+  "emmet.includeLanguages": {
+    "erb": "html",
+    "html.erb": "html",
+    "njk": "html"
+  },
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "git.enableCommitSigning": true,
+  "markdown.extension.toc.githubCompatibility": true,
+  "security.workspace.trust.startupPrompt": "never",
+  "shebang.associations": [
+    {
+      "pattern": "^#!/bin/bash$",
+      "language": "shellscript"
+    },
+    {
+      "pattern": "^#!/usr/bin/env bin/rails runner$",
+      "language": "ruby"
+    }
+  ],
+  "telemetry.enableTelemetry": false,
+  "terminal.integrated.defaultLocation": "editor",
+  "terminal.integrated.rendererType": "experimentalWebgl",
+  "terminal.integrated.scrollback": 100000,
+  "window.zoomLevel": 1,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "updateImportsOnFileMove.enabled": "always"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    },
+    "editor.wordWrap": "on"
+  },
+  "[ruby]": {
+    "editor.defaultFormatter": "misogi.ruby-rubocop",
+    "format": "rubocop",
+    "intellisense": "rubyLocate",
+    "rubocop.useBundler": true,
+    "useBundler": true,
+    "useLanguageServer": true,
+  }
+}
