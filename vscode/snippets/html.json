@@ -1,0 +1,29 @@
+{
+  "<div class=\"\">": {
+    "prefix": "div",
+    "body": [
+      "<div class=\"$0\">",
+      "\t$1",
+      "",
+      "</div>"
+    ]
+  },
+  "<div class=\"flex flex-row\">": {
+    "prefix": "fr",
+    "body": [
+      "<div class=\"flex flex-row $0\">",
+      "\t$1",
+      "",
+      "</div>"
+    ]
+  },
+  "<div class=\"flex flex-col\">": {
+    "prefix": "fc",
+    "body": [
+      "<div class=\"flex flex-col $0\">",
+      "\t$1",
+      "",
+      "</div>"
+    ]
+  }
+}
