@@ -43,12 +43,19 @@ cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
 
 # VSCODE extensions
 echo "Install vscode extensions... ${USER} DIRECTORY ${HOME} VERSIONS $(code -v)"
+
 # Function to check if the `code` command is available
 function wait_for_vscode() {
-    while ! command -v code &> /dev/null; do
-        echo "Waiting for VSCode to be ready..."
+    for i in {1..10}; do  # Wait up to 20 seconds
+        if command -v code &> /dev/null; then
+            echo "VSCode command line tool is available."
+            return 0  # Command is available
+        fi
+        echo "Waiting for the VSCode command line tool to be available..."
         sleep 2
     done
+    echo "VSCode command line tool not available. Exiting."
+    exit 1
 }
 
 # Wait for VSCode to be ready
