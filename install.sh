@@ -32,24 +32,8 @@ echo "Install settings for vscode..."
 cp $DOTFILES_VSCODE_DIR/settings.json "$VSCODE_SETTINGS_DIR/"
 cp $DOTFILES_VSCODE_DIR/keybindings.json "$VSCODE_SETTINGS_DIR/"
 
-echo "setup git user"
-
-# Take specific section and append to ~/.gitconfig
-# grep -A 2 '\[user\]' ~/dotfiles/gitconfig >> ~/.gitconfig
-
-# Copy whole file and append to ~/.gitconfig
-cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
-
-
-# VSCODE extensions
 echo "Installing VSCode Extensions..."
-WHICH_CODE=$(which code)
+cp $DOTFILES_VSCODE_DIR/extensions.json "$VSCODE_SETTINGS_DIR/"
 
-if [ -z "$WHICH_CODE" ]; then
-    echo "VSCode is not installed. Please install it and run this script again."
-    exit 1
-fi
-
-
-cat "${DOTFILES_VSCODE_DIR}/extensions.list" | xargs -n 1 ${WHICH_CODE} --install-extension --force
-
+echo "setup git user"
+cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
