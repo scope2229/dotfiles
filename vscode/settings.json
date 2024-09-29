@@ -29,7 +29,6 @@
   "terminal.integrated.defaultLocation": "editor",
   "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.scrollback": 100000,
-  "window.zoomLevel": 1,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
