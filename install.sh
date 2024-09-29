@@ -1,3 +1,9 @@
+# Define the target directories VSCode
+VSCODE_SETTINGS_DIR="/workspace/.vscode"
+DOTFILES_ROOT_DIR="~/dotfiles"
+DOTFILES_BASH_DIR="${DOTFILES_ROOT_DIR}/bash"
+DOTFILES_VSCODE_DIR="${DOTFILES_ROOT_DIR}/vscode"
+
 echo "Install ~/.bash_aliases..."
 if [ ! -f "${HOME}/.bash_aliases" ]; then
     touch "${HOME}/.bash_aliases"
@@ -6,11 +12,9 @@ else
     echo "Replacing contents of ~/.bash_aliases"
 fi
 
-cat ~/dotfiles/bash/aliases > "${HOME}/.bash_aliases"
+cat $DOTFILES_BASH_DIR/aliases > "${HOME}/.bash_aliases"
 
 echo "Install snippets for vscode..."
-# Define the target directory for VSCode snippets
-VSCODE_SETTINGS_DIR="/workspace/.vscode"
 
 # Check if the directory exists, if not create it
 if [ ! -d "$VSCODE_SETTINGS_DIR" ]; then
@@ -25,8 +29,8 @@ done
 echo "VSCode snippets installed successfully!"
 
 echo "Install settings for vscode..."
-cp ~/dotfiles/vscode/settings.json "$VSCODE_SETTINGS_DIR/"
-cp ~/dotfiles/vscode/keybindings.json "$VSCODE_SETTINGS_DIR/"
+cp $DOTFILES_VSCODE_DIR/settings.json "$VSCODE_SETTINGS_DIR/"
+cp $DOTFILES_VSCODE_DIR/keybindings.json "$VSCODE_SETTINGS_DIR/"
 
 echo "setup git user"
 
@@ -34,7 +38,7 @@ echo "setup git user"
 # grep -A 2 '\[user\]' ~/dotfiles/gitconfig >> ~/.gitconfig
 
 # Copy whole file and append to ~/.gitconfig
-cat ~/dotfiles/gitconfig >> ~/.gitconfig
+cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
 
 
 # VSCODE extensions
@@ -53,6 +57,6 @@ wait_for_vscode
 # Install the Ruby on Rails snippets extension
 while read EX; do
     code --install-extension "$EX"
-done <"$VSCODE_SETTINGS_DIR/vscode/extensions.list"
+done <"${DOTFILES_VSCODE_DIR}/extensions.list"
 
 echo "Ruby on Rails snippets extension installed."
