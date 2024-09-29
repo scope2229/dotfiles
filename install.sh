@@ -42,33 +42,6 @@ cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
 
 
 # VSCODE extensions
-echo "Install vscode extensions... ${USER} DIRECTORY ${HOME} VERSIONS $(code -v)"
+echo "Installing VSCode Extensions..."
+cat "${DOTFILES_VSCODE_DIR}/extensions.list" | xargs -n 1 code --install-extension --force
 
-# Function to check if the `code` command is available
-function wait_for_vscode() {
-    for i in {1..10}; do  # Wait up to 20 seconds
-        if command -v code &> /dev/null; then
-            echo "VSCode command line tool is available."
-            return 0  # Command is available
-        fi
-        echo "Waiting for the VSCode command line tool to be available..."
-        sleep 2
-    done
-    echo "VSCode command line tool not available. Exiting."
-    exit 1
-}
-
-# Wait for VSCode to be ready
-wait_for_vscode
-
-# Install the extensions from the list
-if [ -f "${DOTFILES_VSCODE_DIR}/extensions.list" ]; then
-    while read -r EX; do
-        echo "Installing extension: $EX"
-        code --install-extension "$EX"
-    done < "${DOTFILES_VSCODE_DIR}/extensions.list"
-else
-    echo "No extensions.list file found."
-fi
-
-echo "All extensions installed successfully!"
