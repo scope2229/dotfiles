@@ -6,4 +6,4 @@ else
     echo "Replacing contents of ~/.bash_aliases"
 fi
 
-cat dotfiles/aliases > "${HOME}/.bash_aliases"
+cat ~/dotfiles/aliases > "${HOME}/.bash_aliases"
