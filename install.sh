@@ -4,7 +4,7 @@ DOTFILES_ROOT_DIR="~/dotfiles"
 DOTFILES_BASH_DIR="${DOTFILES_ROOT_DIR}/bash"
 DOTFILES_VSCODE_DIR="${DOTFILES_ROOT_DIR}/vscode"
 
-echo "Install ~/.bash_aliases... ${PWD} DIRECTORY"
+echo "Install ~/.bash_aliases... ${PWD} DIRECTORY ${HOME}"
 if [ ! -f "${HOME}/.bash_aliases" ]; then
     touch "${HOME}/.bash_aliases"
     echo "Created ~/.bash_aliases"
