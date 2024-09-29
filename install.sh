@@ -42,7 +42,7 @@ cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
 
 
 # VSCODE extensions
-echo "Install vscode extensions... ${USER} DIRECTORY ${HOME}"
+echo "Install vscode extensions... ${USER} DIRECTORY ${HOME} VERSIONS ${code -v}"
 # Function to check if the `code` command is available
 function wait_for_vscode() {
     while ! command -v code &> /dev/null; do
