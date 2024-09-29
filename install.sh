@@ -10,16 +10,23 @@ cat ~/dotfiles/bash/aliases > "${HOME}/.bash_aliases"
 
 echo "Install snippets for vscode..."
 # Define the target directory for VSCode snippets
-VSCODE_SNIPPETS_DIR="/workspace/.vscode"
+VSCODE_SETTINGS_DIR="/workspace/.vscode"
 
 # Check if the directory exists, if not create it
-if [ ! -d "$VSCODE_SNIPPETS_DIR" ]; then
-    mkdir -p "$VSCODE_SNIPPETS_DIR"
+if [ ! -d "$VSCODE_SETTINGS_DIR" ]; then
+    mkdir -p "$VSCODE_SETTINGS_DIR"
 fi
 
 # Copy each file from the dotfiles snippets directory to the VSCode snippets directory
 for file in ~/dotfiles/vscode/snippets/*; then
-    cp "$file" "$VSCODE_SNIPPETS_DIR/"
+    cp "$file" "$VSCODE_SETTINGS_DIR/"
 done
 
 echo "VSCode snippets installed successfully!"
+
+echo "Install settings for vscode..."
+cp ~/dotfiles/vscode/settings.json "$VSCODE_SETTINGS_DIR/"
+cp ~/dotfiles/vscode/keybindings.json "$VSCODE_SETTINGS_DIR/"
+
+echo "setup git user"
+grep -A 2 '\[user\]' ~/dotfiles/gitconfig >> ~/.gitconfig
