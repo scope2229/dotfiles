@@ -43,5 +43,13 @@ cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
 
 # VSCODE extensions
 echo "Installing VSCode Extensions..."
-cat "${DOTFILES_VSCODE_DIR}/extensions.list" | xargs -n 1 code --install-extension --force
+WHICH_CODE=$(which code)
+
+if [ -z "$WHICH_CODE" ]; then
+    echo "VSCode is not installed. Please install it and run this script again."
+    exit 1
+fi
+
+
+cat "${DOTFILES_VSCODE_DIR}/extensions.list" | xargs -n 1 ${WHICH_CODE} --install-extension --force
 
