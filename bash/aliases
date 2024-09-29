@@ -1,21 +1,28 @@
 ## ALIAS COMMANDS
 
 # GIT
-alias g="git"
-alias gp='g pull'
-# Push the currently checked out branch
-alias gpo='g push origin "$(g symbolic-ref --short HEAD)"'
-alias gc='g checkout'
+alias gp='git pull'
+alias gpo='git push origin "$(git symbolic-ref --short HEAD)"'
+alias g='git'
+alias gc='git checkout'
+alias gb="g branch"
 
 # SYSTEM
+alias full-update='sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y && sudo apt full-upgrade -y && sudo snap refresh'
 alias update='sudo apt update'
 alias upgrade='sudo apt upgrade'
+alias lock='dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock'
 
 # RAILS
 alias r="rails"
 alias rdbm="r db:migrate"
 alias rr="r routes"
-alias appreset="rails db:drop && rails db:schema:load && rails db:migrate && rails db:seed && ./bin/dev"
+alias rc="r c"
+alias arst='r db:drop db:create db:schema:load db:migrate db:seed'
+alias spec="rspec spec"
+alias gspec="bundle exec guard"
+alias bd="./bin/dev"
+alias lrst="> log/development.log"
 
 ## ALIAS FUNCTIONS
 
@@ -37,17 +44,31 @@ rdbr() {
 
 # GIT
 gcn() {
-	gc -b $1
+        git checkout -b $1
 }
 
 gco() {
-	gc $1
+        git checkout $1
+}
+
+check() {
+	g add .
+	g commit -m "check"
 }
 
 _gitbranch_complete() {
     branches=$(git branch -l | cut -c3-)
     COMPREPLY=($(compgen -W "$branches" -- "$2"))
 }
+
+rstb() {
+        curbranchname=$(git symbolic-ref --short HEAD)
+        gco main
+        gb -D "$curbranchname"
+        gp
+        gco "$curbranchname"
+}
+
 
 # register handler to provide completion hints for the "gcob" command
 # source ~/.completions/git
