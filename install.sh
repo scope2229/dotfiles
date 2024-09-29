@@ -18,7 +18,7 @@ if [ ! -d "$VSCODE_SETTINGS_DIR" ]; then
 fi
 
 # Copy each file from the dotfiles snippets directory to the VSCode snippets directory
-for file in ~/dotfiles/vscode/snippets/*; then
+for file in ~/dotfiles/vscode/snippets/*; do
     cp "$file" "$VSCODE_SETTINGS_DIR/"
 done
 
