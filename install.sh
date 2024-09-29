@@ -35,3 +35,8 @@ echo "setup git user"
 
 # Copy whole file and append to ~/.gitconfig
 cat ~/dotfiles/gitconfig >> ~/.gitconfig
+
+
+# VSCODE extensions
+echo "Install vscode extensions..."
+code --install-extension karunamurti.rspec-snippets
