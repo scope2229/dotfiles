@@ -1,6 +1,6 @@
 # Define the target directories VSCode
 VSCODE_SETTINGS_DIR="/workspace/.vscode"
-DOTFILES_ROOT_DIR="~/dotfiles"
+DOTFILES_ROOT_DIR="${HOME}/dotfiles"
 DOTFILES_BASH_DIR="${DOTFILES_ROOT_DIR}/bash"
 DOTFILES_VSCODE_DIR="${DOTFILES_ROOT_DIR}/vscode"
 
