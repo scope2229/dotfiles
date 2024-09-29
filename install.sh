@@ -61,9 +61,14 @@ function wait_for_vscode() {
 # Wait for VSCode to be ready
 wait_for_vscode
 
-# Install the Ruby on Rails snippets extension
-while read EX; do
-    code --install-extension "$EX"
-done <"${DOTFILES_VSCODE_DIR}/extensions.list"
+# Install the extensions from the list
+if [ -f "${DOTFILES_VSCODE_DIR}/extensions.list" ]; then
+    while read -r EX; do
+        echo "Installing extension: $EX"
+        code --install-extension "$EX"
+    done < "${DOTFILES_VSCODE_DIR}/extensions.list"
+else
+    echo "No extensions.list file found."
+fi
 
-echo "Ruby on Rails snippets extension installed."
+echo "All extensions installed successfully!"
