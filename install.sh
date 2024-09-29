@@ -29,4 +29,9 @@ cp ~/dotfiles/vscode/settings.json "$VSCODE_SETTINGS_DIR/"
 cp ~/dotfiles/vscode/keybindings.json "$VSCODE_SETTINGS_DIR/"
 
 echo "setup git user"
-grep -A 2 '\[user\]' ~/dotfiles/gitconfig >> ~/.gitconfig
+
+# Take specific section and append to ~/.gitconfig
+# grep -A 2 '\[user\]' ~/dotfiles/gitconfig >> ~/.gitconfig
+
+# Copy whole file and append to ~/.gitconfig
+cat ~/dotfiles/gitconfig >> ~/.gitconfig
