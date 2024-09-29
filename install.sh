@@ -39,7 +39,6 @@ cat ~/dotfiles/gitconfig >> ~/.gitconfig
 
 # VSCODE extensions
 echo "Install vscode extensions..."
-
 # Function to check if the `code` command is available
 function wait_for_vscode() {
     while ! command -v code &> /dev/null; do
@@ -52,7 +51,8 @@ function wait_for_vscode() {
 wait_for_vscode
 
 # Install the Ruby on Rails snippets extension
-code --install-extension atefth.ruby-on-rails-snippets
-code --install-extension karunamurti.rspec-snippets
+while read EX; do
+    code --install-extension "$EX"
+done <"$VSCODE_SETTINGS_DIR/vscode/extensions.list"
 
 echo "Ruby on Rails snippets extension installed."
