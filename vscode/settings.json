@@ -54,6 +54,7 @@
     "rubocop.useBundler": true,
     "useBundler": true,
     "useLanguageServer": true,
-    "rubocop.executePath": ""
+    "rubocop.executePath": "",
+    "rubocop.configFilePath": "/workspace/rubocop.yml"
   }
 }
