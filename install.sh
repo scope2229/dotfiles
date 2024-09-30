@@ -35,5 +35,13 @@ cp $DOTFILES_VSCODE_DIR/keybindings.json "$VSCODE_SETTINGS_DIR/"
 echo "Installing VSCode Extensions..."
 cp $DOTFILES_VSCODE_DIR/extensions.json "$VSCODE_SETTINGS_DIR/"
 
+export code="$(ls ~/.vscode-server/bin/*/bin/code-server* | head -n 1)"
+while read -r EX; do
+    echo "Installing extension: $EX"
+    $code --install-extension "$EX"
+done < "${DOTFILES_VSCODE_DIR}/extensions.list"
+
+echo "VSCode Extensions installed successfully!"
+
 echo "setup git user"
 cat $DOTFILES_ROOT_DIR/gitconfig >> ~/.gitconfig
