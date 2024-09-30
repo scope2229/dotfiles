@@ -7,6 +7,7 @@ VSCODE_DIR="${DF_ROOT_DIR}/vscode"
 GIT_DIR="${DF_ROOT_DIR}/git"
 CLEAN_UP_DOTFILES=1
 WORKSPACE_DIR="/workspace"
+RUBY_VERSION=$(grep -E '^ruby "([0-9]+\.[0-9]+\.[0-9]+)"' $WORKSPACE_DIR/Gemfile | sed -E 's/ruby "([0-9]+\.[0-9]+\.[0-9]+)"/\1/')
 
 #############################################################################
 #############################################################################
@@ -28,8 +29,11 @@ echo "Installed ~/.bash_aliases successfully!"
 #############################################################################
 #############################################################################
 
-# Extract Ruby version from Gemfile
-RUBY_VERSION=$(grep -E '^ruby "([0-9]+\.[0-9]+\.[0-9]+)"' $WORKSPACE_DIR/Gemfile | sed -E 's/ruby "([0-9]+\.[0-9]+\.[0-9]+)"/\1/')
+# This section will take a long time to complete and the container will be built
+# with the Ruby version specified in the Gemfile. Wait patently for the installation
+# to complete. To check the progress of the installation, you can run the following
+# ctrl+shift+p command in VSCode: "Remote-Containers: Show Log"
+# The first log should be the latest log containing the progress of the installation.
 
 if [ -z "$RUBY_VERSION" ]; then
     echo "Ruby version not found in Gemfile. Exiting."
@@ -40,6 +44,7 @@ echo "Ruby version found: $RUBY_VERSION"
 
 # Install Ruby using RVM
 if command -v rvm &> /dev/null; then
+    /bin/bash --login
     echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
     rvm install "$RUBY_VERSION"
     rvm use "$RUBY_VERSION" --default
@@ -47,9 +52,6 @@ else
     echo "RVM is not installed. Please install RVM first. Exiting."
     exit 1
 fi
-
-cd $WORKSPACE_DIR
-bin/bundle install
 
 echo "Ruby $RUBY_VERSION installed successfully!"
 
@@ -80,6 +82,15 @@ echo "Install settings for vscode..."
 
 cp $VSCODE_DIR/settings.json "$VSCODE_SETTINGS_DIR/"
 cp $VSCODE_DIR/keybindings.json "$VSCODE_SETTINGS_DIR/"
+
+RUBOCOP_PATH="/usr/local/rvm/gems/ruby-$RUBY_VERSION/bin/rubocop"
+
+# Update settings.json with the rubocop execute path
+if [ -f "$VSCODE_SETTINGS_DIR/settings.json" ]; then
+    jq --arg path "$RUBOCOP_PATH" '.["rubocop.executePath"] = $path' "$VSCODE_SETTINGS_DIR/settings.json" > "$VSCODE_SETTINGS_DIR/settings.tmp.json" && mv "$VSCODE_SETTINGS_DIR/settings.tmp.json" "$VSCODE_SETTINGS_DIR/settings.json"
+else
+    echo "{\"rubocop.executePath\": \"$RUBOCOP_PATH\"}" > "$VSCODE_SETTINGS_DIR/settings.json"
+fi
 
 echo "VSCode settings installed successfully!"
 
