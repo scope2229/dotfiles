@@ -29,7 +29,7 @@ echo "Installed ~/.bash_aliases successfully!"
 #############################################################################
 
 # Extract Ruby version from Gemfile
-RUBY_VERSION=$(grep -E "^ruby '([0-9]+\.[0-9]+\.[0-9]+)'" $WORKSPACE_DIR/Gemfile | sed -E "s/ruby '([0-9]+\.[0-9]+\.[0-9]+)'/\1/")
+RUBY_VERSION=$(grep -E '^ruby "([0-9]+\.[0-9]+\.[0-9]+)"' $WORKSPACE_DIR/Gemfile | sed -E 's/ruby "([0-9]+\.[0-9]+\.[0-9]+)"/\1/')
 
 if [ -z "$RUBY_VERSION" ]; then
     echo "Ruby version not found in Gemfile. Exiting."
