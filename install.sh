@@ -114,11 +114,11 @@ echo "VSCode Extensions installed successfully!"
 #############################################################################
 #############################################################################
 
-echo "Configure git for user"
+# echo "Configure git for user"
 
-cat $DF_ROOT_DIR/git/gitconfig >> ~/.gitconfig
+# cat $DF_ROOT_DIR/git/gitconfig >> ~/.gitconfig
 
-echo "Git configured successfully!"
+# echo "Git configured successfully!"
 
 #############################################################################
 #############################################################################
