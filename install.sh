@@ -27,6 +27,33 @@ echo "Installed ~/.bash_aliases successfully!"
 #############################################################################
 #############################################################################
 
+# Extract Ruby version from Gemfile
+RUBY_VERSION=$(grep -E "^ruby '([0-9]+\.[0-9]+\.[0-9]+)'" Gemfile | sed -E "s/ruby '([0-9]+\.[0-9]+\.[0-9]+)'/\1/")
+
+if [ -z "$RUBY_VERSION" ]; then
+    echo "Ruby version not found in Gemfile. Exiting."
+    exit 1
+fi
+
+echo "Ruby version found: $RUBY_VERSION"
+
+# Install Ruby using RVM
+if command -v rvm &> /dev/null; then
+    echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
+    rvm install "$RUBY_VERSION"
+    rvm use "$RUBY_VERSION" --default
+else
+    echo "RVM is not installed. Please install RVM first. Exiting."
+    exit 1
+fi
+
+echo "Ruby $RUBY_VERSION installed successfully!"
+
+#############################################################################
+#############################################################################
+#############################################################################
+
+
 echo "Install snippets for vscode..."
 
 # Check if the directory exists, if not create it

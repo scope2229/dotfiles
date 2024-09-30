@@ -54,5 +54,6 @@
     "rubocop.useBundler": true,
     "useBundler": true,
     "useLanguageServer": true,
+    "rubocop.executePath": ""
   }
 }
