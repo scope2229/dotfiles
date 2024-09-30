@@ -12,5 +12,21 @@
       "<% $0 %>"
     ],
     "description": "Execute ruby with nothing used as an output"
+  },
+  "<%# $0 %>": {
+    "prefix": "-#",
+    "body": [
+      "<%# $0 %>"
+    ],
+    "description": "Comment"
+  },
+  "Wrap in ERB Comment": {
+    "prefix": "erb-comment",
+    "body": [
+      "<%# ",
+      "${TM_SELECTED_TEXT/\\<%=([^%]*)%\\>/\\<%#=$1%\\>/g}",
+      " %>"
+    ],
+    "description": "Wrap selected text in an ERB comment"
   }
 }

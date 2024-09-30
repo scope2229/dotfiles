@@ -1,6 +1,13 @@
+// If you want to add recommened extensions to your project, you can add them here.
+// It will only install them locally though and not in the devcontainer.
+// {
+//   "recommendations": [
+//     "ms-vscode.vscode-typescript-tslint-plugin",
+//   ]
+// }
+
 {
   "recommendations": [
-    "atefth.ruby-on-rails-snippets",
-    "karunamurti.rspec-snippets"
+
   ]
 }

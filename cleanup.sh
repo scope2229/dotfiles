@@ -1,3 +1,5 @@
+# To save some space, we can remove the dotfiles folder after the dotfiles have been copied to the home directory.
+
 echo "Clearing dotfiles..."
 
 # Function to wait for a folder to be available
@@ -11,7 +13,7 @@ wait_for_folder() {
 }
 
 # Wait for the /home/vscode/dotfiles folder to be available
-wait_for_folder "/home/vscode/dotfiles"
+wait_for_folder "$HOME/dotfiles"
 
 # Remove the ~/dotfiles folder
 rm -rf "${HOME}/dotfiles"
