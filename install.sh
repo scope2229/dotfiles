@@ -29,31 +29,32 @@ echo "Installed ~/.bash_aliases successfully!"
 #############################################################################
 #############################################################################
 
+# EXPERIMENTAL FEATURE
 # This section will take a long time to complete and the container will be built
 # with the Ruby version specified in the Gemfile. Wait patently for the installation
 # to complete. To check the progress of the installation, you can run the following
 # ctrl+shift+p command in VSCode: "Remote-Containers: Show Log"
 # The first log should be the latest log containing the progress of the installation.
 
-if [ -z "$RUBY_VERSION" ]; then
-    echo "Ruby version not found in Gemfile. Exiting."
-    exit 1
-fi
+# if [ -z "$RUBY_VERSION" ]; then
+    # echo "Ruby version not found in Gemfile. Exiting."
+    # exit 1
+# fi
 
-echo "Ruby version found: $RUBY_VERSION"
+# echo "Ruby version found: $RUBY_VERSION"
 
 # Install Ruby using RVM
-if command -v rvm &> /dev/null; then
-    /bin/bash --login
-    echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
-    rvm install "$RUBY_VERSION"
-    rvm use "$RUBY_VERSION" --default
-else
-    echo "RVM is not installed. Please install RVM first. Exiting."
-    exit 1
-fi
+# if command -v rvm &> /dev/null; then
+    # /bin/bash --login
+    # echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
+    # rvm install "$RUBY_VERSION"
+    # rvm use "$RUBY_VERSION" --default
+# else
+    # echo "RVM is not installed. Please install RVM first. Exiting."
+    # exit 1
+# fi
 
-echo "Ruby $RUBY_VERSION installed successfully!"
+# echo "Ruby $RUBY_VERSION installed successfully!"
 
 #############################################################################
 #############################################################################
