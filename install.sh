@@ -7,7 +7,11 @@ VSCODE_DIR="${DF_ROOT_DIR}/vscode"
 GIT_DIR="${DF_ROOT_DIR}/git"
 CLEAN_UP_DOTFILES=1
 WORKSPACE_DIR="/workspace"
-RUBY_VERSION=$(grep -E '^ruby "([0-9]+\.[0-9]+\.[0-9]+)"' $WORKSPACE_DIR/Gemfile | sed -E 's/ruby "([0-9]+\.[0-9]+\.[0-9]+)"/\1/')
+RUBY_VERSION=$(cat $WORKSPACE_DIR/.ruby-version)
+RUBY_GEMSET=$(cat $WORKSPACE_DIR/.ruby-gemset)
+
+# We use vscode as the user in our container
+su - vscode
 
 #############################################################################
 #############################################################################
@@ -36,25 +40,38 @@ echo "Installed ~/.bash_aliases successfully!"
 # ctrl+shift+p command in VSCode: "Remote-Containers: Show Log"
 # The first log should be the latest log containing the progress of the installation.
 
-# if [ -z "$RUBY_VERSION" ]; then
-    # echo "Ruby version not found in Gemfile. Exiting."
-    # exit 1
-# fi
+if [ -z "$RUBY_VERSION" ]; then
+    echo "Ruby version not found in .ruby-version. Exiting."
+    exit 1
+fi
 
-# echo "Ruby version found: $RUBY_VERSION"
+echo "Ruby version found: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
 
 # Install Ruby using RVM
-# if command -v rvm &> /dev/null; then
-    # /bin/bash --login
-    # echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
-    # rvm install "$RUBY_VERSION"
-    # rvm use "$RUBY_VERSION" --default
-# else
-    # echo "RVM is not installed. Please install RVM first. Exiting."
-    # exit 1
-# fi
+if command -v rvm &> /dev/null; then
+    /bin/bash --login
+    echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
+    rvm install "$RUBY_VERSION"
+    rvm use "$RUBY_VERSION" --default
+else
+    echo "RVM is not installed. Please install RVM first. Exiting."
+    exit 1
+fi
 
-# echo "Ruby $RUBY_VERSION installed successfully!"
+# Wait until Ruby is installed
+while ! rvm list strings | grep $RUBY_VERSION; do
+    echo "Waiting for Ruby $RUBY_VERSION to be installed..."
+    sleep 2
+done
+
+# Wait until gemset is ready
+while ! rvm gemset list | grep $RUBY_GEMSET; do
+    cd .
+    echo "Waiting for RVM GEMSET $RUBY_GEMSET to be ready..."
+    sleep 2
+done
+
+echo "Ruby $RUBY_VERSION installed successfully!"
 
 #############################################################################
 #############################################################################
@@ -83,12 +100,17 @@ echo "Install settings for vscode..."
 
 cp $VSCODE_DIR/settings.json "$VSCODE_SETTINGS_DIR/"
 cp $VSCODE_DIR/keybindings.json "$VSCODE_SETTINGS_DIR/"
+cp $VSCODE_DIR/launch.json "$VSCODE_SETTINGS_DIR/"
 
-RUBOCOP_PATH="/usr/local/rvm/gems/ruby-$RUBY_VERSION/bin/rubocop"
+if [ -n "$RUBY_GEMSET" ]; then
+    RUBOCOP_PATH="/usr/local/rvm/gems/ruby-$RUBY_VERSION@$RUBY_GEMSET/bin/"
+else
+    RUBOCOP_PATH="/usr/local/rvm/gems/ruby-$RUBY_VERSION/bin/"
+fi
 
 # Update settings.json with the rubocop execute path
 if [ -f "$VSCODE_SETTINGS_DIR/settings.json" ]; then
-    jq --arg path "$RUBOCOP_PATH" '.["rubocop.executePath"] = $path' "$VSCODE_SETTINGS_DIR/settings.json" > "$VSCODE_SETTINGS_DIR/settings.tmp.json" && mv "$VSCODE_SETTINGS_DIR/settings.tmp.json" "$VSCODE_SETTINGS_DIR/settings.json"
+    jq --arg path "$RUBOCOP_PATH" '.["[ruby]"].rubocop.executePath = $path' "$VSCODE_SETTINGS_DIR/settings.json" > "$VSCODE_SETTINGS_DIR/settings.tmp.json" && mv "$VSCODE_SETTINGS_DIR/settings.tmp.json" "$VSCODE_SETTINGS_DIR/settings.json"
 else
     echo "{\"rubocop.executePath\": \"$RUBOCOP_PATH\"}" > "$VSCODE_SETTINGS_DIR/settings.json"
 fi
@@ -114,11 +136,14 @@ echo "VSCode Extensions installed successfully!"
 #############################################################################
 #############################################################################
 
-# echo "Configure git for user"
+echo "Configure git for user"
+
+git config --global user.email ""
+git config --global user.name ""
 
 # cat $DF_ROOT_DIR/git/gitconfig >> ~/.gitconfig
 
-# echo "Git configured successfully!"
+echo "Git configured successfully!"
 
 #############################################################################
 #############################################################################

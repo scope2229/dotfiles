@@ -12,6 +12,17 @@ Ruby is used for installation.
 
 # Installation
 
+in vscode while not inside a devcontainer. Goto the settings and search for;
+
+<!-- LEAVE THIS BLANK IF YOU WANT TO EDIT THE INSTALL FILE BEFORE RUNNING -->
+Dotfiles: Install Command
+install.sh
+
+Dotfiles: Repository
+git@github.com:scope2229/dotfiles.git
+
+Dotfiles: Target Path
+~/dotfiles
 
 # Components
  
