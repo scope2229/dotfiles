@@ -29,6 +29,13 @@
   "terminal.integrated.defaultLocation": "editor",
   "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.scrollback": 100000,
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash",
+      "args": ["--login"]
+    }
+  },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,

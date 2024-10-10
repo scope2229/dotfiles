@@ -68,6 +68,7 @@ echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
 #     echo "Waiting for RVM GEMSET $RUBY_GEMSET to be ready..."
 #     sleep 2
 # done
+echo "SHELL IN USE IS $SHELL"
 
 source /usr/local/rvm/scripts/rvm
 
