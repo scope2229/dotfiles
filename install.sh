@@ -1,4 +1,5 @@
 # Define the target directories VSCode
+echo "Setting up environment variables..."
 
 VSCODE_SETTINGS_DIR="/workspace/.vscode"
 DF_ROOT_DIR="${HOME}/dotfiles"
@@ -11,7 +12,7 @@ RUBY_VERSION=$(cat $WORKSPACE_DIR/.ruby-version)
 RUBY_GEMSET=$(cat $WORKSPACE_DIR/.ruby-gemset)
 
 # We use vscode as the user in our container
-su - vscode
+# su - vscode
 
 #############################################################################
 #############################################################################
@@ -45,7 +46,7 @@ echo "Installed ~/.bash_aliases successfully!"
 #     exit 1
 # fi
 
-echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
+# echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
 
 # # Install Ruby using RVM
 # if command -v rvm &> /dev/null; then
@@ -71,17 +72,17 @@ echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
 #     sleep 2
 # done
 
-source ~/.rvm/scripts/rvm
+# source ~/.rvm/scripts/rvm
 
-rvm install $RUBY_VERSION
-rvm use $RUBY_VERSION --default
+# rvm install $RUBY_VERSION
+# rvm use $RUBY_VERSION --default
 
-if [ -n "$RUBY_GEMSET" ]; then
-    rvm gemset create $RUBY_GEMSET
-    rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
-fi
+# if [ -n "$RUBY_GEMSET" ]; then
+#     rvm gemset create $RUBY_GEMSET
+#     rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
+# fi
 
-echo "Ruby $RUBY_VERSION installed successfully!"
+# echo "Ruby $RUBY_VERSION installed successfully!"
 
 #############################################################################
 #############################################################################
@@ -146,38 +147,38 @@ echo "VSCode Extensions installed successfully!"
 #############################################################################
 #############################################################################
 
-echo "Install debugging gems..."
+# echo "Install debugging gems..."
 
-cd . && gem install ruby-debug-ide debase:0.2.5.beta2 irb:1.14.1
+# cd . && gem install ruby-debug-ide debase:0.2.5.beta2 irb:1.14.1
 
-echo "Debugging gems installed successfully!"
-
-#############################################################################
-#############################################################################
-#############################################################################
-
-echo "Configure git for user"
-
-git config --global user.email ""
-git config --global user.name ""
-
-# cat $DF_ROOT_DIR/git/gitconfig >> ~/.gitconfig
-
-echo "Git configured successfully!"
+# echo "Debugging gems installed successfully!"
 
 #############################################################################
 #############################################################################
 #############################################################################
 
+# echo "Configure git for user"
 
-if [ "$CLEAN_UP_DOTFILES" -eq 1 ]; then
-    echo "Clearing dotfiles..."
+# git config --global user.email ""
+# git config --global user.name ""
 
-    cd /workspace
-    rm -rf $DF_ROOT_DIR
+# # cat $DF_ROOT_DIR/git/gitconfig >> ~/.gitconfig
 
-    echo "Dotfiles cleared."
-fi
+# echo "Git configured successfully!"
+
+#############################################################################
+#############################################################################
+#############################################################################
+
+
+# if [ "$CLEAN_UP_DOTFILES" -eq 1 ]; then
+#     echo "Clearing dotfiles..."
+
+#     cd /workspace
+#     rm -rf $DF_ROOT_DIR
+
+#     echo "Dotfiles cleared."
+# fi
 
 
 #############################################################################
