@@ -68,10 +68,14 @@ echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
 #     echo "Waiting for RVM GEMSET $RUBY_GEMSET to be ready..."
 #     sleep 2
 # done
+/bin/bash --login
 
 source /usr/local/rvm/scripts/rvm
 
 rvm install $RUBY_VERSION
+
+cd .
+
 rvm use $RUBY_VERSION --default
 
 if [ -n "$RUBY_GEMSET" ]; then
