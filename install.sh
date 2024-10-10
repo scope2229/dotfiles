@@ -12,7 +12,7 @@ RUBY_VERSION=$(cat $WORKSPACE_DIR/.ruby-version)
 RUBY_GEMSET=$(cat $WORKSPACE_DIR/.ruby-gemset)
 
 # We use vscode as the user in our container
-# su - vscode
+su - vscode
 
 #############################################################################
 #############################################################################
