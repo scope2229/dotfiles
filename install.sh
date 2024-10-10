@@ -11,9 +11,6 @@ WORKSPACE_DIR="/workspace"
 RUBY_VERSION=$(cat $WORKSPACE_DIR/.ruby-version)
 RUBY_GEMSET=$(cat $WORKSPACE_DIR/.ruby-gemset)
 
-# We use vscode as the user in our container
-su - vscode
-
 #############################################################################
 #############################################################################
 #############################################################################
@@ -46,7 +43,7 @@ echo "Installed ~/.bash_aliases successfully!"
 #     exit 1
 # fi
 
-# echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
+echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
 
 # # Install Ruby using RVM
 # if command -v rvm &> /dev/null; then
@@ -72,17 +69,17 @@ echo "Installed ~/.bash_aliases successfully!"
 #     sleep 2
 # done
 
-# source ~/.rvm/scripts/rvm
+source ~/.rvm/scripts/rvm
 
-# rvm install $RUBY_VERSION
-# rvm use $RUBY_VERSION --default
+rvm install $RUBY_VERSION
+rvm use $RUBY_VERSION --default
 
-# if [ -n "$RUBY_GEMSET" ]; then
-#     rvm gemset create $RUBY_GEMSET
-#     rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
-# fi
+if [ -n "$RUBY_GEMSET" ]; then
+    rvm gemset create $RUBY_GEMSET
+    rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
+fi
 
-# echo "Ruby $RUBY_VERSION installed successfully!"
+echo "Ruby $RUBY_VERSION installed successfully!"
 
 #############################################################################
 #############################################################################
