@@ -76,10 +76,14 @@ rvm install $RUBY_VERSION
 
 rvm use $RUBY_VERSION --default
 
-if [ -n "$RUBY_GEMSET" ]; then
-    rvm gemset create $RUBY_GEMSET
-    rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
-fi
+cd $WORKSPACE_DIR
+
+# if [ -n "$RUBY_GEMSET" ]; then
+    # rvm gemset create $RUBY_GEMSET
+    # rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
+# fi
+
+bundle install
 
 echo "Ruby $RUBY_VERSION installed successfully!"
 
