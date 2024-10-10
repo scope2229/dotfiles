@@ -69,7 +69,7 @@ echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
 #     sleep 2
 # done
 
-source ~/.rvm/scripts/rvm
+source /usr/local/rvm/scripts/rvm
 
 rvm install $RUBY_VERSION
 rvm use $RUBY_VERSION --default
