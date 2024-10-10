@@ -40,36 +40,46 @@ echo "Installed ~/.bash_aliases successfully!"
 # ctrl+shift+p command in VSCode: "Remote-Containers: Show Log"
 # The first log should be the latest log containing the progress of the installation.
 
-if [ -z "$RUBY_VERSION" ]; then
-    echo "Ruby version not found in .ruby-version. Exiting."
-    exit 1
+# if [ -z "$RUBY_VERSION" ]; then
+#     echo "Ruby version not found in .ruby-version. Exiting."
+#     exit 1
+# fi
+
+echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
+
+# # Install Ruby using RVM
+# if command -v rvm &> /dev/null; then
+#     /bin/bash --login
+#     echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
+#     rvm install "$RUBY_VERSION"
+#     rvm use "$RUBY_VERSION" --default
+# else
+#     echo "RVM is not installed. Please install RVM first. Exiting."
+#     exit 1
+# fi
+
+# # Wait until Ruby is installed
+# while ! rvm list strings | grep $RUBY_VERSION; do
+#     echo "Waiting for Ruby $RUBY_VERSION to be installed..."
+#     sleep 2
+# done
+
+# # Wait until gemset is ready
+# while ! rvm gemset list | grep $RUBY_GEMSET; do
+#     cd .
+#     echo "Waiting for RVM GEMSET $RUBY_GEMSET to be ready..."
+#     sleep 2
+# done
+
+source ~/.rvm/scripts/rvm
+
+rvm install $RUBY_VERSION
+rvm use $RUBY_VERSION --default
+
+if [ -n "$RUBY_GEMSET" ]; then
+    rvm gemset create $RUBY_GEMSET
+    rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
 fi
-
-echo "Ruby version found: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
-
-# Install Ruby using RVM
-if command -v rvm &> /dev/null; then
-    /bin/bash --login
-    echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
-    rvm install "$RUBY_VERSION"
-    rvm use "$RUBY_VERSION" --default
-else
-    echo "RVM is not installed. Please install RVM first. Exiting."
-    exit 1
-fi
-
-# Wait until Ruby is installed
-while ! rvm list strings | grep $RUBY_VERSION; do
-    echo "Waiting for Ruby $RUBY_VERSION to be installed..."
-    sleep 2
-done
-
-# Wait until gemset is ready
-while ! rvm gemset list | grep $RUBY_GEMSET; do
-    cd .
-    echo "Waiting for RVM GEMSET $RUBY_GEMSET to be ready..."
-    sleep 2
-done
 
 echo "Ruby $RUBY_VERSION installed successfully!"
 
