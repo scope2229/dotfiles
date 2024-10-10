@@ -38,52 +38,13 @@ echo "Installed ~/.bash_aliases successfully!"
 # ctrl+shift+p command in VSCode: "Remote-Containers: Show Log"
 # The first log should be the latest log containing the progress of the installation.
 
-# if [ -z "$RUBY_VERSION" ]; then
-#     echo "Ruby version not found in .ruby-version. Exiting."
-#     exit 1
-# fi
-
 echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
-
-# # Install Ruby using RVM
-# if command -v rvm &> /dev/null; then
-#     /bin/bash --login
-#     echo "RVM is installed. Installing Ruby $RUBY_VERSION..."
-#     rvm install "$RUBY_VERSION"
-#     rvm use "$RUBY_VERSION" --default
-# else
-#     echo "RVM is not installed. Please install RVM first. Exiting."
-#     exit 1
-# fi
-
-# # Wait until Ruby is installed
-# while ! rvm list strings | grep $RUBY_VERSION; do
-#     echo "Waiting for Ruby $RUBY_VERSION to be installed..."
-#     sleep 2
-# done
-
-# # Wait until gemset is ready
-# while ! rvm gemset list | grep $RUBY_GEMSET; do
-#     cd .
-#     echo "Waiting for RVM GEMSET $RUBY_GEMSET to be ready..."
-#     sleep 2
-# done
-echo "SHELL IN USE IS $SHELL"
 
 source /usr/local/rvm/scripts/rvm
 
 rvm install $RUBY_VERSION
 
-rvm use $RUBY_VERSION --default
-
 cd $WORKSPACE_DIR
-
-# if [ -n "$RUBY_GEMSET" ]; then
-    # rvm gemset create $RUBY_GEMSET
-    # rvm gemset use $RUBY_VERSION@$RUBY_GEMSET --default
-# fi
-
-bundle install
 
 echo "Ruby $RUBY_VERSION installed successfully!"
 
@@ -150,11 +111,11 @@ echo "VSCode Extensions installed successfully!"
 #############################################################################
 #############################################################################
 
-# echo "Install debugging gems..."
+echo "Copy over debugging setup script..."
 
-# cd . && gem install ruby-debug-ide debase:0.2.5.beta2 irb:1.14.1
+cp $VSCODE_DIR/debugging.sh "$VSCODE_SETTINGS_DIR/"
 
-# echo "Debugging gems installed successfully!"
+echo "Debugging script copied!"
 
 #############################################################################
 #############################################################################
@@ -174,14 +135,14 @@ echo "VSCode Extensions installed successfully!"
 #############################################################################
 
 
-# if [ "$CLEAN_UP_DOTFILES" -eq 1 ]; then
-#     echo "Clearing dotfiles..."
+if [ "$CLEAN_UP_DOTFILES" -eq 1 ]; then
+    echo "Clearing dotfiles..."
 
-#     cd /workspace
-#     rm -rf $DF_ROOT_DIR
+    cd /workspace
+    rm -rf $DF_ROOT_DIR
 
-#     echo "Dotfiles cleared."
-# fi
+    echo "Dotfiles cleared."
+fi
 
 
 #############################################################################
