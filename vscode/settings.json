@@ -26,8 +26,6 @@
     }
   ],
   "telemetry.enableTelemetry": false,
-  "terminal.integrated.defaultLocation": "editor",
-  "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.scrollback": 100000,
   "terminal.integrated.profiles.linux": {
     "bash": {
@@ -61,7 +59,6 @@
     "rubocop.useBundler": true,
     "useBundler": true,
     "useLanguageServer": true,
-    "rubocop.executePath": "",
     "rubocop.configFilePath": "/workspace/rubocop.yml"
   }
 }
