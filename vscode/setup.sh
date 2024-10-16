@@ -25,8 +25,6 @@ install_ruby_with_rvm() {
 
     rvm gemset create $RUBY_GEMSET
 
-    rvm use $RUBY_VERSION@$RUBY_GEMSET --default
-
     cd $WORKSPACE_DIR
 
     bundle install

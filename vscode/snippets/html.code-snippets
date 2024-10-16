@@ -4,26 +4,50 @@
     "body": [
       "<div class=\"$0\">",
       "\t$1",
-      "",
       "</div>"
     ]
+  },
+  "Wrap with <div class=\"\">": {
+    "prefix": "wrap-div",
+    "body": [
+      "<div class=\"$1\">",
+      "\t${TM_SELECTED_TEXT}",
+      "</div>"
+    ],
+    "description": "Wrap selected HTML elements with a <div> element"
   },
   "<div class=\"flex flex-row\">": {
     "prefix": "fr",
     "body": [
       "<div class=\"flex flex-row $0\">",
       "\t$1",
-      "",
       "</div>"
     ]
+  },
+  "Wrap with <div class=\"flex flex-row\">": {
+    "prefix": "wrap-fr",
+    "body": [
+      "<div class=\"flex flex-row $1\">",
+      "\t${TM_SELECTED_TEXT}",
+      "</div>"
+    ],
+    "description": "Wrap selected HTML elements with a <div flex row> element"
   },
   "<div class=\"flex flex-col\">": {
     "prefix": "fc",
     "body": [
       "<div class=\"flex flex-col $0\">",
       "\t$1",
-      "",
       "</div>"
     ]
+  },
+  "Wrap with <div class=\"flex flex-col\">": {
+    "prefix": "wrap-fc",
+    "body": [
+      "<div class=\"flex flex-col $1\">",
+      "\t${TM_SELECTED_TEXT}",
+      "</div>"
+    ],
+    "description": "Wrap selected HTML elements with a <div flex col> element"
   }
 }
