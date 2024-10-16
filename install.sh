@@ -31,28 +31,6 @@ echo "Installed ~/.bash_aliases successfully!"
 #############################################################################
 #############################################################################
 
-# EXPERIMENTAL FEATURE
-# This section will take a long time to complete and the container will be built
-# with the Ruby version specified in the Gemfile. Wait patently for the installation
-# to complete. To check the progress of the installation, you can run the following
-# ctrl+shift+p command in VSCode: "Remote-Containers: Show Log"
-# The first log should be the latest log containing the progress of the installation.
-
-echo "Installing Ruby version: $RUBY_VERSION; WITH GEMSET: $RUBY_GEMSET"
-
-source /usr/local/rvm/scripts/rvm
-
-rvm install $RUBY_VERSION
-
-cd $WORKSPACE_DIR
-
-echo "Ruby $RUBY_VERSION installed successfully!"
-
-#############################################################################
-#############################################################################
-#############################################################################
-
-
 echo "Install snippets for vscode..."
 
 # Check if the directory exists, if not create it
@@ -77,21 +55,6 @@ cp $VSCODE_DIR/settings.json "$VSCODE_SETTINGS_DIR/"
 cp $VSCODE_DIR/keybindings.json "$VSCODE_SETTINGS_DIR/"
 cp $VSCODE_DIR/launch.json "$VSCODE_SETTINGS_DIR/"
 
-if [ -n "$RUBY_GEMSET" ]; then
-    RUBOCOP_PATH="/usr/local/rvm/gems/ruby-$RUBY_VERSION@$RUBY_GEMSET/bin/"
-else
-    RUBOCOP_PATH="/usr/local/rvm/gems/ruby-$RUBY_VERSION/bin/"
-fi
-
-# Update settings.json with the rubocop execute path
-if [ -f "$VSCODE_SETTINGS_DIR/settings.json" ]; then
-    jq --arg path "$RUBOCOP_PATH" '.["[ruby]"].rubocop.executePath = $path' "$VSCODE_SETTINGS_DIR/settings.json" > "$VSCODE_SETTINGS_DIR/settings.tmp.json" && mv "$VSCODE_SETTINGS_DIR/settings.tmp.json" "$VSCODE_SETTINGS_DIR/settings.json"
-else
-    echo "{\"rubocop.executePath\": \"$RUBOCOP_PATH\"}" > "$VSCODE_SETTINGS_DIR/settings.json"
-fi
-
-echo "VSCode settings installed successfully!"
-
 #############################################################################
 #############################################################################
 #############################################################################
@@ -111,29 +74,16 @@ echo "VSCode Extensions installed successfully!"
 #############################################################################
 #############################################################################
 
-echo "Copy over debugging setup script..."
+echo "Copy over setup scripts..."
 
 cp $VSCODE_DIR/debugging.sh "$VSCODE_SETTINGS_DIR/"
+cp $VSCODE_DIR/setup.sh "$VSCODE_SETTINGS_DIR/"
 
-echo "Debugging script copied!"
-
-#############################################################################
-#############################################################################
-#############################################################################
-
-# echo "Configure git for user"
-
-# git config --global user.email ""
-# git config --global user.name ""
-
-# # cat $DF_ROOT_DIR/git/gitconfig >> ~/.gitconfig
-
-# echo "Git configured successfully!"
+echo "Setup script copied!"
 
 #############################################################################
 #############################################################################
 #############################################################################
-
 
 if [ "$CLEAN_UP_DOTFILES" -eq 1 ]; then
     echo "Clearing dotfiles..."
@@ -143,7 +93,6 @@ if [ "$CLEAN_UP_DOTFILES" -eq 1 ]; then
 
     echo "Dotfiles cleared."
 fi
-
 
 #############################################################################
 #############################################################################
