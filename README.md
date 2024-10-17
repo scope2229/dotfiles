@@ -16,13 +16,18 @@ in vscode while not inside a devcontainer. Goto the settings and search for;
 
 <!-- LEAVE THIS BLANK IF YOU WANT TO EDIT THE INSTALL FILE BEFORE RUNNING -->
 Dotfiles: Install Command
-install.sh
+`install.sh`
 
 Dotfiles: Repository
-git@github.com:scope2229/dotfiles.git
+`git@github.com:scope2229/dotfiles.git`
 
 Dotfiles: Target Path
-~/dotfiles
+`~/dotfiles`
+
+After the initial dotfiles has ran and the dev container is built run.
+To see a list of options use `setup.sh -h`
+`./.vscode/setup.sh -a`
+
 
 # Components
  
