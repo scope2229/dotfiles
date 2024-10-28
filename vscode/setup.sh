@@ -9,7 +9,7 @@ RUBY_GEMSET=$(cat $WORKSPACE_DIR/.ruby-gemset)
 
 WORKSPACE_DIR="/workspace"
 RUBY_PATH="/usr/local/rvm/gems/ruby-$RUBY_VERSION@$RUBY_GEMSET/bin/"
-RUBOCOP_PATH="$(dirname $(which rubocop))/"
+RUBOCOP_PATH="/usr/local/rvm/gems/ruby-${RUBY_VERSION}/bin/"
 VSCODE_SETTINGS_DIR="$WORKSPACE_DIR/.vscode"
 
 ###############################################################################
@@ -57,6 +57,10 @@ install_debugging_tools() {
 
     gem install ruby-debug-ide debase:0.2.5.beta2 irb:1.14.1
 
+    code --install-extension KoichiSasada.vscode-rdbg
+
+    export VSCODE_DEBUGGING=1
+
     echo "Ruby debugging tools installed successfully!"
 }
 
@@ -92,19 +96,15 @@ usage() {
 while getopts "arcdh" opt; do
     case $opt in
         a)
-            echo "Option -a passed"
             install_all
             ;;
         r)
-            echo "Option -r passed"
             install_ruby_with_rvm
             ;;
         c)
-            echo "Option -c passed"
             install_rubocop
             ;;
         d)
-            echo "Option -d passed"
             install_debugging_tools
             ;;
         h)
