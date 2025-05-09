@@ -1,32 +1,91 @@
+##################################################################################################################################################
+##################################################################################################################################################
+
 ## ALIAS COMMANDS
+
+##################################################################################################################################################
+##################################################################################################################################################
 
 # GIT
 alias gp='git pull'
+alias gprb='git pull origin "$(git symbolic-ref --short HEAD)"'
 alias gpo='git push origin "$(git symbolic-ref --short HEAD)"'
 alias g='git'
 alias gc='git checkout'
-alias gb="g branch"
+alias gb='g branch'
+alias grm='g rebase main'
+alias gcom='gco main'
 
 # SYSTEM
 alias full-update='sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y && sudo apt full-upgrade -y && sudo snap refresh'
 alias update='sudo apt update'
 alias upgrade='sudo apt upgrade'
 alias lock='dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock'
+alias csac='clear_screenshots_and_casts'
+alias sss='source ~/.bashrc && cd .'
+
+alias cdP='cd ~/Documents/Projects'
+alias cdW='cd ~/Documents/Work'
+alias cdD='cd ~/Documents'
+alias cdR='cd ~/Documents/Work/roots'
 
 # RAILS
-alias r="rails"
-alias rdbm="r db:migrate"
-alias rr="r routes"
-alias rc="r c"
+alias r='rails'
+alias rdbm='r db:migrate'
+alias rr='r routes'
+alias rc='r c'
 alias arst='r db:drop db:create db:schema:load db:migrate db:seed'
-alias spec="rspec spec"
-alias gspec="bundle exec guard"
-alias bd="./bin/dev"
-alias lrst="> log/development.log"
+alias a='arst'
+alias spec='rspec spec --fail-fast'
+alias s='spec'
+alias gspec='bundle exec guard'
+alias bd='[ -e ./.overmind.sock ] && rm ./.overmind.sock; ./bin/dev'
+alias lrst='> log/development.log'
+alias rmo='rm ./.overmind.sock'
+alias rcache='rails dv:cache'
+
+##################################################################################################################################################
+##################################################################################################################################################
 
 ## ALIAS FUNCTIONS
 
-# SYSTEM
+##################################################################################################################################################
+##################################################################################################################################################
+
+#########
+## SYSTEM
+ddUSB() {
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: createUSBWithDD <ISO-file> <output-dir>"
+        return
+    fi
+    
+    local iso_file=$1
+    local output_dir=$2
+    sudo dd if="$iso_file" of="$output_dir" bs=4k status=progress
+}
+
+clear_screenshots_and_casts() {
+    pictures_dir=~/Pictures/Screenshots
+    videos_dir=~/Videos/Screencasts
+    directories=("$pictures_dir" "$videos_dir")
+  
+    for dir in "${directories[@]}"; do
+        if [ -d "$dir" ]; then
+            echo "Clearing directory: $dir"
+
+            local file_count=$(find "$dir" -type f | wc -l)
+            echo "Found $file_count files to delete"
+
+            find "$dir" -type f -delete
+
+            local remaining=$(find "$dir" -type f | wc -l)
+            echo "Deletion complete. $remaining files remaining."
+        else
+            echo "Warning: Directory $dir does not exist"
+        fi
+    done
+}
 
 # Sometimes Javascript watcher or puma will break.
 # This often causes rails server to fail due to
@@ -37,14 +96,18 @@ kp() {
   kill $(lsof -t -i:$1)
 }
 
+#######
 # RAILS
 rdbr() {
   r db:rollback STEP=$1
 }
 
+#####
 # GIT
 gcn() {
-        git checkout -b $1
+        # join all the argumments with a _
+        branchname=$(echo $* | tr ' ' '_')
+        git checkout -b $branchname
 }
 
 gco() {
@@ -69,6 +132,60 @@ rstb() {
         gco "$curbranchname"
 }
 
+setSSHKeyPermissions() {
+    # Get current user and home directory
+    USER_NAME=$(whoami)
+    SSH_DIR="$HOME/.ssh"
+
+    # Check if .ssh exists
+    if [ ! -d "$SSH_DIR" ]; then
+        echo "No .ssh directory found at $SSH_DIR"
+        exit 1
+    fi
+
+    echo "Fixing permissions in $SSH_DIR"
+
+    # 1. Set permissions for .ssh directory
+    chmod 700 "$SSH_DIR"
+    chown "$USER_NAME":"$USER_NAME" "$SSH_DIR"
+
+    # 2. Loop through all files in .ssh
+    for file in "$SSH_DIR"/*; do
+        if [ -f "$file" ]; then
+            base=$(basename "$file")
+
+            case "$base" in
+                *.pub)
+                    chmod 644 "$file"
+                    ;;
+                *)
+                    chmod 600 "$file"
+                    ;;
+            esac
+
+            chown "$USER_NAME":"$USER_NAME" "$file"
+        fi
+    done
+
+    echo "Permissions successfully fixed for $SSH_DIR"
+}
+
+cm() {
+    if ! command -v center_mouse &> /dev/null; then
+        echo "center_mouse command not found. Please install it first."
+        return
+    fi
+    if [ $# -eq 0 ]; then
+        echo "Usage: cm <number>"
+        return
+    fi
+    if ! [[ $1 =~ ^[0-9]+$ ]]; then
+        echo "Error: Argument must be a number."
+        return
+    fi
+
+    center_mouse "$1"
+}
 
 # register handler to provide completion hints for the "gcob" command
 # source ~/.completions/git
