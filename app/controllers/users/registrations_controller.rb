@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bcrypt'
+
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   
@@ -62,8 +64,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def encrypt_key(password)
     # Implement encryption logic here
     # This should match your API's encryption implementation
-    # For example, using bcrypt or another encryption method
-    require 'bcrypt'
+    # Using bcrypt for secure password hashing
     BCrypt::Password.create(password)
   end
 

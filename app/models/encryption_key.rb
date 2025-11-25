@@ -15,7 +15,6 @@ class EncryptionKey < ApplicationRecord
   def ensure_one_key_per_user
     if user && user.encryption_key.present?
       errors.add(:base, "User already has an encryption key")
-      throw(:abort)
     end
   end
 end
